@@ -14,7 +14,7 @@
 ### 2.1 Measures of Central Tendency
 
 - **Mean**: Arithmetic average—sensitive to outliers
-  - Formula: \( \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} \)
+  - Formula: $\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}$
   - Use cases: Model evaluation, feature normalization
 
 - **Median**: Middle value—robust to skewed data
@@ -28,11 +28,20 @@
 ### 2.2 Measures of Dispersion
 
 - **Range**: Difference between max and min values
+
 - **Interquartile Range (IQR)**: Range between 25th and 75th percentiles
-- **Variance**: Average squared deviation from mean
-  - Formula: \( \sigma^2 = \frac{\sum_{i=1}^{n}(x_i - \mu)^2}{n} \)
-- **Standard Deviation**: Square root of variance
-  - Formula: \( \sigma = \sqrt{\sigma^2} \)
+
+- **Variance**: Average squared deviation from the mean  
+  - **Population Variance**:  
+    $\sigma^2 = \frac{\sum_{i=1}^{N}(x_i - \mu)^2}{N}$  
+  - **Sample Variance**:  
+    $s^2 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n - 1}$
+
+- **Standard Deviation**: Square root of variance  
+  - **Population Standard Deviation**:  
+    $\sigma = \sqrt{\sigma^2}$  
+  - **Sample Standard Deviation**:  
+    $s = \sqrt{s^2}$  
   - Critical for feature scaling and normalization
 
 ### 2.3 Shape of Distribution
@@ -49,13 +58,18 @@ Skewness means **lack of symmetry**. A distribution is symmetric or normal when 
   - **mean < median < mode**
   - Longer or fatter tail on the left side
 
-**Karl Pearson's Coefficient of Skewness**:
-\[ Sk = \frac{\text{Mean} - \text{Mode}}{\sigma} \]
+**Karl Pearson's Coefficient of Skewness** (First Formula):  
+$Sk = \frac{\bar{x} - \text{Mode}}{s}$  
 
-**Interpretation**:
-- Sk > 0: Positively skewed (right tail longer)
-- Sk < 0: Negatively skewed (left tail longer)  
-- Sk = 0: Symmetric distribution
+Where:  
+- $\bar{x}$ = sample mean (use $\mu$ for population mean)  
+- $\text{Mode}$ = most frequent value in the dataset  
+- $s$ = sample standard deviation (use $\sigma$ for population)  
+
+**Interpretation**:  
+- $Sk > 0$: Positively skewed (right tail longer)  
+- $Sk < 0$: Negatively skewed (left tail longer)  
+- $Sk = 0$: Symmetric distribution
 
 #### **Kurtosis** – Tailedness and Peakedness
 
@@ -83,13 +97,26 @@ Kurtosis describes the shape of a distribution's tails and peakedness compared t
 
 Identifying outliers is crucial for improving statistical model accuracy:
 
-#### 1. **Using Descriptive Statistics (Z-Score)**
-\[ z = \frac{x - \mu}{\sigma} \]
-- Outliers typically have |z| > 3
+#### 1. **Using Descriptive Statistics (Z-Score)**  
+- **Population Z-score**:  
+  $z = \frac{x - \mu}{\sigma}$  
 
-#### 2. **Using Interquartile Range (IQR) Method**
-\[ IQR = Q_3 - Q_1 \]
-- Outliers: values < Q₁ - 1.5×IQR or > Q₃ + 1.5×IQR
+- **Sample Z-score**:  
+  $z = \frac{x - \bar{x}}{s}$  
+
+Where:  
+- $x$ = data point  
+- $\mu$, $\sigma$ = population mean and standard deviation  
+- $\bar{x}$, $s$ = sample mean and standard deviation  
+
+Outliers typically have $|z| > 3$.
+
+#### 2. **Using Interquartile Range (IQR) Method**  
+$IQR = Q_3 - Q_1$  
+
+Outlier criteria:  
+- $x < Q_1 - 1.5 \times IQR$  
+- $x > Q_3 + 1.5 \times IQR$  
 
 #### 3. **Visualization Methods**
 - **Box Plot**: Outliers appear as individual points outside whiskers
@@ -107,18 +134,43 @@ Identifying outliers is crucial for improving statistical model accuracy:
 
 ### 3.1 Basic Terminology
 
-- **Sample Space (Ω)**: Set of all possible outcomes
-- **Event (A)**: Subset of sample space  
-- **Probability**: \( P(A) = \frac{\text{Number of favorable outcomes}}{\text{Total number of outcomes}} \)
+- **Sample Space** ($\Omega$): Set of all possible outcomes.  
+- **Event** ($A$): Subset of the sample space.  
+- **Probability**:  
+  $$
+  P(A) = \frac{\text{Number of favorable outcomes}}{\text{Total number of outcomes}}
+  $$
 
 **Key Probability Rules**:
-- **Addition Rule**: \( P(A \cup B) = P(A) + P(B) - P(A \cap B) \)
-- **Multiplication Rule**: \( P(A \cap B) = P(A) \cdot P(B|A) \)
-- **Conditional Probability**: \( P(A|B) = \frac{P(A \cap B)}{P(B)} \)
+
+- **Addition Rule**:  
+  $$
+  P(A \cup B) = P(A) + P(B) - P(A \cap B)
+  $$
+
+- **Multiplication Rule**:  
+  $$
+  P(A \cap B) = P(A) \cdot P(B|A)
+  $$
+
+- **Conditional Probability**:  
+  $$
+  P(A|B) = \frac{P(A \cap B)}{P(B)}
+  $$
 
 ### 3.2 Bayes' Theorem
 
-\[ P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)} \]
+Bayes’ theorem updates the probability of an event based on new information:  
+
+$$
+P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}
+$$
+
+Where:  
+- $P(A|B)$ = Posterior probability (probability of $A$ given $B$)  
+- $P(B|A)$ = Likelihood (probability of $B$ given $A$)  
+- $P(A)$ = Prior probability of $A$  
+- $P(B)$ = Marginal probability of $B$
 
 **Applications in ML**:
 - Naive Bayes classifiers
@@ -130,33 +182,104 @@ Identifying outliers is crucial for improving statistical model accuracy:
 
 #### **Discrete Distributions**
 
-- **Bernoulli Distribution**: Single trial with binary outcome
-  - Parameter: p (probability of success)
+- **Bernoulli Distribution**: Single trial with binary outcome.  
+  - Parameter: $p$ (probability of success)  
   - Used in: Binary classification
 
-- **Binomial Distribution**: Multiple independent Bernoulli trials
-  - Formula: \( P(X = k) = \binom{n}{k} p^k (1-p)^{n-k} \)
+- **Binomial Distribution**: Multiple independent Bernoulli trials.  
+  - Formula: $P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$  
   - Applications: A/B testing, quality control
 
-- **Poisson Distribution**: Events occurring in fixed intervals
-  - Formula: \( P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!} \)
+- **Poisson Distribution**: Events occurring in fixed intervals.  
+  - Formula: $P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}$  
   - Used in: Recommendation systems, fraud detection
+
+- **Geometric Distribution**: Number of trials until the first success.  
+  - Formula: $P(X = k) = (1-p)^{k-1} p$  
+  - Used in: Reliability testing, modeling time to first event
+
+- **Negative Binomial Distribution**: Number of trials until a fixed number of successes.  
+  - Formula: $P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}$  
+  - Used in: Overdispersed count data, modeling repeated events
+
+- **Hypergeometric Distribution**: Probability of $k$ successes in $n$ draws **without** replacement from a finite population.  
+  - Formula:  
+    $$
+    P(X = k) = \frac{\binom{K}{k} \binom{N-K}{n-k}}{\binom{N}{n}}
+    $$  
+  - Used in: Quality control, sampling without replacement
+
+- **Multinomial Distribution**: Generalization of binomial to more than two outcomes.  
+  - Formula:  
+    $$
+    P(X_1 = x_1, \dots, X_k = x_k) = \frac{n!}{x_1! \dots x_k!} p_1^{x_1} \dots p_k^{x_k}
+    $$  
+  - Used in: Text classification (word counts), categorical outcome modeling
 
 #### **Continuous Distributions**
 
-- **Normal Distribution**: Bell-shaped curve
-  - Formula: \( f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}} \)
-  - Central to many ML algorithms and Central Limit Theorem
+- **Normal Distribution**: Bell-shaped curve.  
+  - Formula:  
+    $$
+    f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+    $$
+  - Central to many ML algorithms and the Central Limit Theorem.
 
-- **Standard Normal Distribution**: Special case when μ = 0, σ = 1
-  - **Z-score transformation**: \( z = \frac{x - \mu}{\sigma} \)
-  - Represents how many standard deviations x is from the mean
+- **Standard Normal Distribution**: Special case when $\mu = 0$, $\sigma = 1$.  
+  - **Z-score transformation**:  
+    $$
+    z = \frac{x - \mu}{\sigma}
+    $$
+  - Represents how many standard deviations $x$ is from the mean.
 
-- **Uniform Distribution**: All outcomes equally likely
-  - Used in: Random sampling, parameter initialization
+- **Uniform Distribution**: All outcomes equally likely over an interval $[a,b]$.  
+  - Formula:  
+    $$
+    f(x) = \frac{1}{b-a}, \quad a \le x \le b
+    $$
+  - Used in: Random sampling, parameter initialization.
 
-- **Exponential Distribution**: Time between events
-  - Applications: Survival analysis, reliability engineering
+- **Exponential Distribution**: Models time between events in a Poisson process.  
+  - Formula:  
+    $$
+    f(x) = \lambda e^{-\lambda x}, \quad x \ge 0
+    $$
+  - Applications: Survival analysis, reliability engineering.
+
+- **Gamma Distribution**: Generalization of the exponential; models waiting times for multiple events.  
+  - Formula:  
+    $$
+    f(x) = \frac{\beta^\alpha x^{\alpha - 1} e^{-\beta x}}{\Gamma(\alpha)}, \quad x > 0
+    $$
+  - Used in: Bayesian inference, queuing models.
+
+- **Beta Distribution**: Models probabilities and proportions on $[0,1]$.  
+  - Formula:  
+    $$
+    f(x) = \frac{x^{\alpha - 1} (1-x)^{\beta - 1}}{B(\alpha,\beta)}, \quad 0 < x < 1
+    $$
+  - Used in: A/B testing, Bayesian modeling.
+
+- **Chi-Square Distribution**: Special case of the gamma distribution; sum of squared standard normal variables.  
+  - Formula:  
+    $$
+    f(x) = \frac{1}{2^{k/2} \Gamma(k/2)} x^{k/2 - 1} e^{-x/2}, \quad x \ge 0
+    $$
+  - Used in: Hypothesis testing, goodness-of-fit tests.
+
+- **Student's t-Distribution**: Similar to normal but with heavier tails; accounts for extra uncertainty in small samples.  
+  - Formula:  
+    $$
+    f(t) = \frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi} \ \Gamma\left(\frac{\nu}{2}\right)} \left(1 + \frac{t^2}{\nu}\right)^{-\frac{\nu+1}{2}}
+    $$
+  - Used in: t-tests, regression analysis.
+
+- **Log-Normal Distribution**: Distribution of a variable whose logarithm is normally distributed.  
+  - Formula:  
+    $$
+    f(x) = \frac{1}{x\sigma\sqrt{2\pi}} e^{-\frac{(\ln x - \mu)^2}{2\sigma^2}}, \quad x > 0
+    $$
+  - Used in: Modeling positive skewed data, financial returns.
 
 ### 3.4 Central Limit Theorem
 
@@ -193,9 +316,31 @@ Identifying outliers is crucial for improving statistical model accuracy:
 
 ### 4.1 Confidence Intervals (CI)
 
-A **95% confidence interval** around a metric (e.g., accuracy) represents the range that would contain the true value in 95% of repeated samples.
+A **confidence interval** represents a range of plausible values for a population parameter based on sample data.  
+A **95% confidence interval** means that, in repeated sampling, 95% of the computed intervals would contain the true population parameter.
 
-**Formula**: \( \bar{x} \pm t_{\alpha/2} \cdot \frac{s}{\sqrt{n}} \)
+**Formula for sample mean (unknown $\sigma$)**:  
+$$
+\bar{x} \pm t_{\alpha/2, \, df=n-1} \cdot \frac{s}{\sqrt{n}}
+$$
+
+**Formula for sample mean (known $\sigma$)**:  
+$$
+\bar{x} \pm z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}
+$$
+
+Where:  
+- $\bar{x}$ = sample mean  
+- $s$ = sample standard deviation  
+- $\sigma$ = population standard deviation  
+- $n$ = sample size  
+- $t_{\alpha/2, \, df=n-1}$ = critical value from Student's t-distribution  
+- $z_{\alpha/2}$ = critical value from standard normal distribution  
+- $\alpha$ = significance level (e.g., 0.05 for 95% CI)
+
+**Key Points**:  
+- Use **$t$-distribution** when $\sigma$ is unknown (common in practice).  
+- Use **$z$-distribution** when $\sigma$ is known or $n$ is large (Central Limit Theorem).
 
 ### 4.2 Hypothesis Testing
 
@@ -208,10 +353,32 @@ A **95% confidence interval** around a metric (e.g., accuracy) represents the ra
    - **H₁ (Alternative Hypothesis)**: There is an effect
 
 2. **Choose Appropriate Test**:
-   - **Z-test**: Known σ, large sample size
-   - **t-test**: Unknown σ or small sample size  
-   - **Chi-square test**: Categorical data independence or goodness-of-fit
-   - **F-test/ANOVA**: Compare ≥2 variances or means
+
+- **Z-test**:  
+  - Use when: Population standard deviation ($\sigma$) is known **or** sample size is large ($n \gtrsim 30$).  
+  - Types:  
+    - One-sample Z-test (compare sample mean to population mean)  
+    - Two-sample Z-test (compare two means with known $\sigma$)  
+    - Proportion Z-test (compare proportions)  
+
+- **t-test**:  
+  - Use when: $\sigma$ unknown, especially with small sample sizes.  
+  - Types:  
+    - One-sample t-test (compare sample mean to hypothesized mean)  
+    - Independent two-sample t-test (compare means of two independent groups)  
+    - Paired t-test (compare means from the same group at two different times)  
+
+- **Chi-square test**:  
+  - Use for:  
+    - **Independence test** (association between categorical variables)  
+    - **Goodness-of-fit** (how well observed frequencies match expected frequencies)  
+
+- **F-test / ANOVA**:  
+  - Use for:  
+    - **F-test**: Compare two variances.  
+    - **ANOVA** (Analysis of Variance): Compare means across 3 or more groups.  
+      - One-way ANOVA: One independent variable.  
+      - Two-way ANOVA: Two independent variables (can test interaction effects).  
 
 3. **Compute Test Statistic & p-value**
 
@@ -272,9 +439,34 @@ The **p-value** (probability value) tells you how likely it is to observe your d
 
 ### Entropy
 
-**Definition**: Measures uncertainty or impurity in a dataset.
+**Definition**:  
+Entropy measures the **uncertainty**, **randomness**, or **impurity** in a probability distribution.  
+In machine learning, it’s often used in decision trees to measure how mixed a dataset is with respect to target classes.
 
-**Formula**: \[ H(X) = -\sum_{i} p_i \log_2 p_i \]
+**Formula**:  
+$$
+H(X) = -\sum_{i=1}^{n} p_i \log_2 p_i
+$$
+
+Where:  
+- $X$ = random variable with $n$ possible outcomes  
+- $p_i$ = probability of outcome $i$  
+- The base of the logarithm determines the units:
+  - $\log_2$: Entropy in **bits**
+  - $\log_e$: Entropy in **nats**
+  - $\log_{10}$: Entropy in **hartleys**
+
+**Properties**:  
+- $H(X) \ge 0$  
+- $H(X) = 0$ if the outcome is certain (one $p_i = 1$).  
+- Maximum entropy occurs when all outcomes are equally likely:  
+  $H_{\max} = \log_2(n)$ bits.
+
+**Example**:  
+For a fair coin:  
+$$
+H(X) = -\left[ \frac{1}{2} \log_2 \frac{1}{2} + \frac{1}{2} \log_2 \frac{1}{2} \right] = 1 \ \text{bit}
+$$
 
 **Interpretation**:
 - **Entropy = 0**: All data points belong to one class (pure)
